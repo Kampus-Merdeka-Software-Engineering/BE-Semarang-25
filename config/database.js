@@ -1,19 +1,15 @@
-
-
+import "dotenv/config";
 import { Sequelize } from "sequelize";
 
 const db = new Sequelize(
-    "capstoneproject",
-    "root",
-    "", {
-        host: 'localhost',
-        dialect: "mysql",
-    });
-
-    db.authenticate()
-    .then(() => 'Database sudah terhbung')
-    .catch((error) => {
-        console.error('database bermasalah: ', error);
-    })
+    process.env.DATABASE_NAME,
+    process.env.DATABASE_USERNAME,
+    process.env.DATABASE_PASSWORD,
+    {
+      host: process.env.DATABASE_HOST,
+      dialect: "mysql",
+      port: process.env.DATABASE_PORT,
+    }
+  );
 
     export default db;
