@@ -11,7 +11,7 @@ const db = new Sequelize(
     });
 
     db.authenticate()
-    .then(() => 'Database sudah terhbung')
+    .then(() => 'Database sudah terhubung')
     .catch((error) => {
         console.error('database bermasalah: ', error);
     })

@@ -7,7 +7,9 @@ const router = express.Router();
   router.post("/appointment", async (req, res) => {
     try {
         await Jadwal.create(req.body);
-        res.status(201).json({msg: "jadwal telah berhasil ditambahkan" });
+        res.status(201).json({
+          msg: "Jadwal Telah Berhasil Ditambahkan" 
+      });
     } catch (error) {
         res.send(error.message);
     }
