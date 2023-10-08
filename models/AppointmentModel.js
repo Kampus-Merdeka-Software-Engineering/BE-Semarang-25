@@ -1,25 +1,34 @@
 import { Sequelize, DataTypes } from "sequelize";
-import db from "../config/database.js";
+import db from "../config/Database.js";
 
-const App = db.define("patients", {
-    appointment_id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-    patient_id: {
-        type: DataTypes.INTEGER,
-    },
-    specialization: {
-        type: DataTypes.STRING, 
-       },   
-    date: {
-    type: DataTypes.DATE, 
-    },   
- });
+const Appointment = db.define("appointments", {
+  appointment_id: { 
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  registrationNumber: {
+    type: DataTypes.STRING,
+    unique: true,
+  },
+  name: {
+    type: DataTypes.STRING,
+  },
+  number: {
+    type: DataTypes.STRING,
+  },
+  email: {
+    type: DataTypes.STRING,
+  },
+  gender: {
+    type: DataTypes.STRING,
+  },
+  specialization: {
+    type: DataTypes.STRING,
+  },
+  date: {
+    type: DataTypes.DATE,
+  },
+});
 
- export default Patient;
- 
-// (async () => {
-//     await db.sync();
-// })();
+export default Appointment;
