@@ -4,10 +4,31 @@ import Appointment from "../models/AppointmentModel.js";
 
 export const createAppointment = async (req, res) => {
   try {
-    await Appointment.create(req.body);
-    res.status(201).json({ msg: "Appointment created" });
+    // Mendapatkan data dari permintaan yang dikirim oleh klien
+    const {
+      registrationNumber,
+      name,
+      number,
+      email,
+      gender,
+      specialization,
+      date,
+    } = req.body;
+
+    // Membuat janji temu baru di database
+    const newAppointment = await Appointment.create({
+      registrationNumber,
+      name,
+      number,
+      email,
+      gender,
+      specialization,
+      date,
+    });
+
+    res.status(201).json({ message: 'Data telah diterima' });
   } catch (error) {
-    res.send(error.message);
+    res.status(400).json({ error: error.message });
   }
 };
 
@@ -17,11 +38,11 @@ export const getAppointmentsByRegistrationNumber = async (req, res) => {
 
     const appointments = await Appointment.findOne({
       where: { registrationNumber },
-      attributes: { exclude: ['createdAt', 'updatedAt'] },
+      attributes: { exclude: ["createdAt", "updatedAt"] },
     });
 
     if (!appointments) {
-      return res.status(404).json({ error: 'Janji temu tidak ditemukan' });
+      return res.status(404).json({ error: "Janji temu tidak ditemukan" });
     }
 
     res.status(200).json(appointments);
