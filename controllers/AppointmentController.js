@@ -15,12 +15,16 @@ export const getAppointmentsByRegistrationNumber = async (req, res) => {
   try {
     const { registrationNumber } = req.params;
 
-    const appointments = await db.query(
-      'SELECT * FROM Appointments WHERE registrationNumber = ?',
-      [registrationNumber]
-    );
+    const appointment = await Appointment.findOne({
+      where: { registrationNumber },
+      attributes: { exclude: ['createdAt', 'updatedAt'] },
+    });
 
-    res.status(200).json(appointments);
+    if (!appointment) {
+      return res.status(404).json({ error: 'Janji temu tidak ditemukan' });
+    }
+
+    res.status(200).json(appointment);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
