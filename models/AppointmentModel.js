@@ -15,7 +15,7 @@ const Appointment = db.define("appointments", {
     type: DataTypes.STRING,
   },
   number: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
   },
   email: {
     type: DataTypes.STRING,
