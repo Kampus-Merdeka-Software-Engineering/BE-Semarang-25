@@ -1,6 +1,6 @@
 import db from "../config/Database.js";
-import Appointment from "../models/AppoitnmentModel.js";
-import Patient from "../models/PatientModel.js";
+import Appointment from "../models/AppointmentModel.js";
+//import Patient from "../models/PatientModel.js";
 
 export const createAppointment = async (req, res) => {
   try {
