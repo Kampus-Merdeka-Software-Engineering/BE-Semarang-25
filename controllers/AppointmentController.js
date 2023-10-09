@@ -16,7 +16,7 @@ export const getAppointmentsByRegistrationNumber = async (req, res) => {
     const { registrationNumber } = req.params;
 
     const appointments = await db.query(
-      `SELECT * FROM Appointments WHERE registrationNumber = ?`,
+      'SELECT * FROM Appointments WHERE registrationNumber = ?',
       [registrationNumber]
     );
 
