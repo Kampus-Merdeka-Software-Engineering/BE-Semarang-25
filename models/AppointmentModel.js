@@ -2,7 +2,7 @@ import { Sequelize, DataTypes } from "sequelize";
 import db from "../config/Database.js";
 
 const Appointment = db.define("appointments", {
-  appointment_id: { 
+  id: { 
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
@@ -30,5 +30,19 @@ const Appointment = db.define("appointments", {
     type: DataTypes.DATE,
   },
 });
+
+// Fungsi untuk menghasilkan nomor pendaftaran secara otomatis
+Appointment.generateRegistrationNumber = function () {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const registrationNumberLength = 8; // Panjang nomor pendaftaran yang diinginkan
+
+  let registrationNumber = '';
+  for (let i = 0; i < registrationNumberLength; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    registrationNumber += characters.charAt(randomIndex);
+  }
+
+  return registrationNumber;
+};
 
 export default Appointment;

@@ -1,6 +1,6 @@
 import db from "../config/Database.js";
-import Appointment from "../models/AppoitnmentModel.js";
-import Patient from "../models/PatientModel.js";
+import Appointment from "../models/AppointmentModel.js";
+// import Patient from "../models/PatientModel.js";
 
 export const createAppointment = async (req, res) => {
   try {
@@ -11,29 +11,17 @@ export const createAppointment = async (req, res) => {
   }
 };
 
-export const getAllAppointmentsfromUser = async (req, res) => {
+export const getAppointmentsByRegistrationNumber = async (req, res) => {
   try {
-    // ========= OPTION 1
+    const { registrationNumber } = req.params;
 
-    // const Appointments = await Appointment.findOne({
-    //   where: { patient_id: req.params.patient_id },
-    // });
-
-    // const user = await Patient.findOne({
-    //   where: { patient_id: req.params.patient_id },
-    // });
-
-    // const AppointmentsAndUser = { Appointments: Appointments, user: user };
-
-    // ======= OPTION 2
-    const Appointments = await db.query(
-      `SELECT * FROM Appointments JOIN patients ON patients.patient_id = Appointments.patient_id WHERE patients.patient_id = ${req.params.patient_id}`
+    const appointments = await db.query(
+      'SELECT * FROM Appointments WHERE registrationNumber = ?',
+      [registrationNumber]
     );
 
-    const AppointmentsAndUser = { Appointments: Appointments[0] };
-
-    res.status(200).json(AppointmentsAndUser);
+    res.status(200).json(appointments);
   } catch (error) {
-    res.send(error.message);
+    res.status(500).json({ error: error.message });
   }
 };
