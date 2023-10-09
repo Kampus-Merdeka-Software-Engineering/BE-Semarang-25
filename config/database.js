@@ -1,4 +1,4 @@
-import "dotenv/config.js";
+import dotenv from "dotenv";
 import { Sequelize } from "sequelize";
 
 const db = new Sequelize(
