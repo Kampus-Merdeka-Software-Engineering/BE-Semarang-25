@@ -29,6 +29,9 @@ const Appointment = db.define("appointments", {
   date: {
     type: DataTypes.DATE,
   },
+  qrCodeData: {
+    type: DataTypes.TEXT, // Menggunakan TEXT untuk menyimpan data QR code dalam format base64
+  },
 });
 
 // Fungsi untuk menghasilkan nomor pendaftaran secara otomatis
