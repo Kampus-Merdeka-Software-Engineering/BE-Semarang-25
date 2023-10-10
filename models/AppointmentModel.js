@@ -34,18 +34,5 @@ const Appointment = db.define("appointments", {
   },
 });
 
-// Fungsi untuk menghasilkan nomor pendaftaran secara otomatis
-Appointment.generateRegistrationNumber = function () {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  const registrationNumberLength = 8;
-
-  let registrationNumber = '';
-  for (let i = 0; i < registrationNumberLength; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    registrationNumber += characters.charAt(randomIndex);
-  }
-
-  return registrationNumber;
-};
 
 export default Appointment;

@@ -2,6 +2,20 @@ import db from "../config/Database.js";
 import Appointment from "../models/AppointmentModel.js";
 import bwipjs from 'bwip-js';
 
+// Fungsi untuk menghasilkan nomor pendaftaran secara otomatis
+export const generateRegistrationNumber = () => {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const registrationNumberLength = 8;
+
+  let registrationNumber = '';
+  for (let i = 0; i < registrationNumberLength; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    registrationNumber += characters.charAt(randomIndex);
+  }
+
+  return registrationNumber;
+};
+
 // Fungsi untuk membuat QR code
 const generateQRCode = async (registrationNumber) => {
   return new Promise((resolve, reject) => {
@@ -24,9 +38,8 @@ const generateQRCode = async (registrationNumber) => {
 
 export const createAppointment = async (req, res) => {
   try {
-    // Mendapatkan data dari permintaan yang dikirim oleh klien
+    const registrationNumber = generateRegistrationNumber();
     const {
-      registrationNumber,
       name,
       number,
       email,
