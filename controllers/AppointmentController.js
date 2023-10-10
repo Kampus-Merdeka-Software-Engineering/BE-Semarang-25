@@ -1,31 +1,21 @@
 import db from "../config/Database.js";
 import Appointment from "../models/AppointmentModel.js";
 import bwipjs from 'bwip-js';
-import multer from "multer";
-// import Patient from "../models/PatientModel.js";
-
-// Fungsi untuk multer
-const upload = multer({
-  storage: multer.memoryStorage(), // Simpan file dalam memori
-  limits: {
-    fileSize: 1024 * 1024 * 5, // Batas ukuran file (5 MB)
-  },
-});
 
 // Fungsi untuk membuat QR code
 const generateQRCode = async (registrationNumber) => {
   return new Promise((resolve, reject) => {
     bwipjs.toBuffer(
       {
-        bcid: 'qrcode', // Jenis barcode (qrcode untuk QR code)
-        text: registrationNumber, // Data untuk QR code
-        scale: 3, // Skala QR code
+        bcid: 'qrcode',
+        text: registrationNumber,
+        scale: 3,
       },
       (err, buffer) => {
         if (err) {
           reject(err);
         } else {
-          resolve(buffer.toString('base64')); // Mengubah buffer ke format base64
+          resolve(buffer.toString('base64'));
         }
       }
     );
@@ -66,27 +56,16 @@ export const createAppointment = async (req, res) => {
   }
 };
 
-export const searchAppointment = async (req, res) => {
+export const getAppointmentsByRegistrationNumber = async (req, res) => {
   try {
-    const { searchData } = req.params;
-    const isRegistrationNumber = /^[A-Z0-9]{8}$/.test(searchData);
-    let appointment;
+    const { registrationNumber } = req.params;
 
-    if (isRegistrationNumber) {
-      // Lakukan pencarian berdasarkan nomor registrasi
-      appointment = await Appointment.findOne({
-        where: { registrationNumber: searchData },
-        attributes: { exclude: ["id", "createdAt", "updatedAt"] },
-      });
-    } else {
-      // Lakukan pencarian berdasarkan data QR code
-      appointment = await Appointment.findOne({
-        where: { qrCodeData: searchData },
-        attributes: { exclude: ["id", "createdAt", "updatedAt"] },
-      });
-    }
+    const appointments = await Appointment.findOne({
+      where: { registrationNumber },
+      attributes: { exclude: ["id", "createdAt", "updatedAt"] },
+    });
 
-    if (!appointment) {
+    if (!appointments) {
       return res.status(404).json({ error: "Janji temu tidak ditemukan" });
     }
 

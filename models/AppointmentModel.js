@@ -30,14 +30,14 @@ const Appointment = db.define("appointments", {
     type: DataTypes.DATE,
   },
   qrCodeData: {
-    type: DataTypes.TEXT, // Menggunakan TEXT untuk menyimpan data QR code dalam format base64
+    type: DataTypes.TEXT,
   },
 });
 
 // Fungsi untuk menghasilkan nomor pendaftaran secara otomatis
 Appointment.generateRegistrationNumber = function () {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  const registrationNumberLength = 8; // Panjang nomor pendaftaran yang diinginkan
+  const registrationNumberLength = 8;
 
   let registrationNumber = '';
   for (let i = 0; i < registrationNumberLength; i++) {
