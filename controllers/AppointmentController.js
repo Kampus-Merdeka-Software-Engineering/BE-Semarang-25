@@ -1,4 +1,4 @@
-import db from "../config/Database.js";
+import db from "../config/database.js";
 import Appointment from "../models/AppointmentModel.js";
 import bwipjs from 'bwip-js';
 
