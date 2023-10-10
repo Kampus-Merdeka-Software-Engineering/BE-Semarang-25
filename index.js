@@ -2,7 +2,7 @@
 import "dotenv/config.js";
 import express from "express";
 import cors from "cors";
-import db from "./config/Database.js";
+import db from "./config/database.js";
 import AppoinmentRoutes from "./routes/AppointmentRoutes.js";
 
 const PORT = process.env.PORT || 3000;
