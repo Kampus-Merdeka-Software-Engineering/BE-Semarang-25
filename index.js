@@ -1,20 +1,25 @@
-// import db from './config/database.js';
-import express from 'express';
-import UserRouter from './routes/UserRoutes.js';
+// import dotenv from "dotenv";
+import "dotenv/config.js";
+import express from "express";
+import cors from "cors";
+import db from "./config/Database.js";
+import AppoinmentRoutes from "./routes/AppointmentRoutes.js";
 
+const PORT = process.env.PORT || 3000;
 const app = express();
-const port = 3000;
-
 app.use(express.json());
+app.use(cors());
 
-app.get('/', (req, res) => {
-  res.send('Helloooooooo')
-})
+// Route
+app.use(AppoinmentRoutes);
 
-app.use(UserRouter);
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
-
-
+db.sync({ alter: true })
+  .then(() => {
+    console.log("Database connected");
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}.`);
+    });
+  })
+  .catch((error) => {
+    console.log(`Unable to connect to database: ${error}`);
+  });
